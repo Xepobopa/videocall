@@ -43,6 +43,19 @@ export default function App() {
                 }
             })
             .on('end', () => finishCall(false))
+
+        const finishCall = (isCaller) => {
+            pc.stop(isCaller)
+
+            setPc(null)
+            setConfig(null)
+
+            setCalling(false)
+            setShowModal(false)
+
+            setLocalSrc(null)
+            setRemoteSrc(null)
+        }
     }, [pc])
 
     const startCall = (isCaller, remoteId, config) => {
@@ -67,19 +80,6 @@ export default function App() {
         socket.emit('end', { to: callFrom })
 
         setShowModal(false)
-    }
-
-    const finishCall = (isCaller) => {
-        pc.stop(isCaller)
-
-        setPc(null)
-        setConfig(null)
-
-        setCalling(false)
-        setShowModal(false)
-
-        setLocalSrc(null)
-        setRemoteSrc(null)
     }
 
     return (
